@@ -1,3 +1,30 @@
 <resources>
     <string name="app_name">Friends Tracker App</string>
+    <string name="menutitle_addTask">Add Task</string>
+    <string name="menumain_showContacts">Contact_List</string>
+    <string name="menumain_settings">Settings</string>
+    <string name="menumain_showAbout">About</string>
+    <string name="menumain_generate">Generate data</string>
+    <string name="no_contact_message">No Contact Selected</string>
+    <string name="edit_button_contact">Button to edit contact details</string>
+    <string name="delete_contact_button">button to delete contact</string>
+    <string name="contact_item_image">pic of the contact</string>
+    <string name="addedit_name_hint">Contact Name: required</string>
+    <string name="addedit_email_hint">Contact Email (optional)</string>
+    <string name="addedit_birthday_hint">Select Date of Birth</string>
+    <string name="addedit_save_contact">Save</string>
+    <string name="title_activity_add_edit">AddEditActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="menumain_addMeeting">Add Meeting</string>
+    <string name="menumain_viewMeetings">View Meetings</string>
+    <string name="no_meeting_message">No Meeting Message</string>
+    <string name="mli_meeting_location">Meeting Location</string>
+    <string name="meeting_start_time">Start Time</string>
+    <string name="meeting_end_time">End Time</string>
+    <string name="meeting_title">MeetingTitle</string>
+    <string name="meeting_attendees">Meeting Attendees</string>
+    <string name="addeditMeeting_title">Meeting title</string>
+    <string name="addeditMeeting_location">Add Meeting Location</string>
+    <string name="addeditMeeting_starttime">Meeting Start Time</string>
+    <string name="addeditMeeting_endtime">Meeting End Time</string>
 </resources>

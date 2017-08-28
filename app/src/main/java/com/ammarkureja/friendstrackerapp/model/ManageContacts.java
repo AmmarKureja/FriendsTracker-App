@@ -26,10 +26,12 @@ public class ManageContacts {
 
         //ContentResolver cr = getContentResolver();
         Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
-        if (cur.getCount() > 0) {
-            while (cur.moveToNext()) {
+        if (cur.moveToFirst()) {
+
+           do {
                 ContactEntry contactEntry = new ContactEntry();
                 String id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
+
                 contactEntry.setId(id);
                 Cursor cur1 = cr.query(
                         ContactsContract.CommonDataKinds.Email.CONTENT_URI, null,
@@ -47,7 +49,8 @@ public class ManageContacts {
                 }
                 contacts.add(contactEntry);
                 cur1.close();
-            }
+            } while (cur.moveToNext());
+            cur.close();
         }
     return true;}
 

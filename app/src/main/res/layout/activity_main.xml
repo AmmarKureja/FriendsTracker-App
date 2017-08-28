@@ -7,24 +7,26 @@
     tools:context="com.ammarkureja.friendstrackerapp.controller.MainActivity">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btn_manageFriend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:text="Manage Friends"
+        android:onClick="navigateToFriends"
         app:layout_constraintLeft_toLeftOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btn_manageMeetings"
         android:layout_width="wrap_content"
         android:layout_height="49dp"
         android:layout_marginLeft="16dp"
         android:text="Manage Meetings"
-        app:layout_constraintBaseline_toBaselineOf="@+id/button"
-        app:layout_constraintLeft_toRightOf="@+id/button" />
+        android:onClick="navigateToFriends"
+        app:layout_constraintBaseline_toBaselineOf="@+id/btn_manageFriend"
+        app:layout_constraintLeft_toRightOf="@+id/btn_manageFriend" />
 
     <TextView
         android:id="@+id/textView"

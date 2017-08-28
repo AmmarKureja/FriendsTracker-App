@@ -1,0 +1,5 @@
+Create TABLE Contacts (_id INTEGER PRIMARY KEY NOT NULL, name TEXT NOT NULL, phone VARCHAR, email VARCHAR, imageUrl VARCHAR);
+
+CREATE TABLE Meetings (_id INTEGER PRIMARY KEY NOT NULL, title TEXT NOT NULL, start_time INTEGER NOT NULL, end_time NOT NULL, latitude DECIMAL(9,6), longitude DECIMAL(9,6));              
+
+CREATE TABLE Contacts_Meetings (contact_id INTEGER NOT NULL, meeting_id INTEGER NOT NULL, FOREIGN KEY (contact_id) REFERENCES Contacts(_id), FOREIGN KEY (meeting_id) REFERENCES Meetings(_id), PRIMARY KEY (contact_id, meeting_id));

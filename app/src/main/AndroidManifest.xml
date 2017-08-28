@@ -3,8 +3,7 @@
     package="com.ammarkureja.friendstrackerapp">
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-
-
+    />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -19,6 +18,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".controller.activity_friend" />
+
+        <provider
+            android:name=".model.AppProvider"
+            android:authorities="com.ammarkureja.friendstrackerapp.model.provider"
+            android:exported="false" />
+
+        <activity
+            android:name=".controller.AddEditActivity"
+            android:label="@string/title_activity_add_edit"
+            android:parentActivityName=".controller.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ammarkureja.friendstrackerapp.controller.MainActivity" />
+        </activity>
+        <activity android:name=".ViewFriendsActivity" />
+        <activity android:name=".controller.ViewFriendsActivity"></activity>
     </application>
 
 </manifest>

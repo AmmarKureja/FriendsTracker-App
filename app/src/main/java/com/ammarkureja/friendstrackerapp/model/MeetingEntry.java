@@ -11,7 +11,8 @@ public class MeetingEntry {
     private String title;
     private String startTime;
     private String endTime;
-    private String location;
+    private double latitude;
+    private double longitude;
     private ArrayList<ContactEntry> participants;
 
     MeetingEntry(){
@@ -19,6 +20,8 @@ public class MeetingEntry {
         this.title = null;
         this.startTime = null;
         this.endTime = null;
+        this.latitude = 0.0;
+        this.longitude = 0.0;
         this.participants = new ArrayList<>();
     }
 
@@ -54,12 +57,20 @@ public class MeetingEntry {
         this.endTime = endTime;
     }
 
-    public String getLocation() {
-        return location;
+    public double getLatitude() {
+        return latitude;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     public ArrayList<ContactEntry> getParticipants() {
