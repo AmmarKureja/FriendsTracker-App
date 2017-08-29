@@ -63,6 +63,7 @@ public class AppDatabase extends SQLiteOpenHelper{
                 + MeetingContract.Columns.MEETING_TITLE + " TEXT NOT NULL, "
                 + MeetingContract.Columns.MEETING_START_TIME + " VARCHAR, "
                 + MeetingContract.Columns.MEETING_END_TIME + " VARCHAR, "
+                + MeetingContract.Columns.MEETING_DATE + " VARCHAR, "
                 + MeetingContract.Columns.MEETING_LOCATION + " VARCHAR);";
         db.execSQL(sSQL);
         Log.d(TAG, "Meeting Table Created");

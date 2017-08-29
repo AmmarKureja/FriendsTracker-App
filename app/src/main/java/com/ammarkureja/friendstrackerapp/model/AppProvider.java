@@ -34,12 +34,7 @@ public class AppProvider extends ContentProvider{
     private static final int MEETINGS = 200;
     private static final int MEETINGS_ID = 201;
 
-    /*
-    * public static final int TIMINGS = 300;
-    public static final int TIMINGS_ID = 301;
-    */
-
-    private static final int CONTACTS_MEETINGS = 400;
+    private static final int CONTACTS_MEETINGS = 300;
     private static final int CONTACTS_MEETINGS_ID = 401;
 
     private static UriMatcher buildUriMatcher() {
@@ -53,8 +48,8 @@ public class AppProvider extends ContentProvider{
        matcher.addURI(CONTENT_AUTHORITY, MeetingContract.TABLE_NAME, MEETINGS);
        matcher.addURI(CONTENT_AUTHORITY, MeetingContract.TABLE_NAME + "/#", MEETINGS_ID);
 //
-//        matcher.addURI(CONTENT_AUTHORITY, ContactMeetingContract.TABLE_NAME, CONTACTS_MEETINGS);
-//        matcher.addURI(CONTENT_AUTHORITY, ContactMeetingContract.TABLE_NAME + "/#", CONTACTS_MEETINGS_ID);
+        matcher.addURI(CONTENT_AUTHORITY, ContactMeetingContract.TABLE_NAME, CONTACTS_MEETINGS);
+        matcher.addURI(CONTENT_AUTHORITY, ContactMeetingContract.TABLE_NAME + "/#", CONTACTS_MEETINGS_ID);
 
         return matcher;
     }
@@ -89,15 +84,15 @@ public class AppProvider extends ContentProvider{
                 long meetingId = MeetingContract.getMeetingId(uri);
                 queryBuilder.appendWhere(MeetingContract.Columns._ID + " = " + meetingId);
                 break;
-//
-//            case CONTACTS_MEETINGS:
-//                queryBuilder.setTables(ContactMeetingContract.TABLE_NAME);
-//                break;
-//            case CONTACTS_MEETINGS_ID:
-//                queryBuilder.setTables(ContactMeetingContract.TABLE_NAME);
-//                long contactMeetingId = ContactMeetingContract.getMeetingId(uri);
-//                queryBuilder.appendWhere(ContactMeetingContract.Columns._ID + " = " + contactMeetingId);
-//                break;
+
+            case CONTACTS_MEETINGS:
+                queryBuilder.setTables(ContactMeetingContract.TABLE_NAME);
+                break;
+            case CONTACTS_MEETINGS_ID:
+                queryBuilder.setTables(ContactMeetingContract.TABLE_NAME);
+                long contactMeetingId = ContactMeetingContract.getContactMeetingId(uri);
+                queryBuilder.appendWhere(ContactMeetingContract.Columns._ID + " = " + contactMeetingId);
+                break;
 
             default:
                 throw new IllegalArgumentException("Unknown Uri: "+uri);
@@ -121,23 +116,18 @@ public class AppProvider extends ContentProvider{
             case CONTACTS_ID:
                 return ContactContract.CONTENT_ITEM_TYPE;
 
-//            case MEETINGS:
-//                queryBuilder.setTables(MeetingContract.TABLE_NAME);
-//                break;
-//            case MEETINGS_ID:
-//                queryBuilder.setTables(MeetingContract.TABLE_NAME);
-//                long meetingId = MeetingContract.getMeetingId(uri);
-//                queryBuilder.appendWhere(MeetingContract.Columns._ID + " = " + meetingId);
-//                break;
-//
-//            case CONTACTS_MEETINGS:
-//                queryBuilder.setTables(ContactMeetingContract.TABLE_NAME);
-//                break;
-//            case CONTACTS_MEETINGS_ID:
-//                queryBuilder.setTables(ContactMeetingContract.TABLE_NAME);
-//                long contactMeetingId = ContactMeetingContract.getMeetingId(uri);
-//                queryBuilder.appendWhere(ContactMeetingContract.Columns._ID + " = " + contactMeetingId);
-//                break;
+            case MEETINGS:
+                return MeetingContract.CONTENT_TYPE;
+
+            case MEETINGS_ID:
+                return MeetingContract.CONTENT_ITEM_TYPE;
+
+
+            case CONTACTS_MEETINGS:
+                return ContactMeetingContract.CONTENT_TYPE;
+
+            case CONTACTS_MEETINGS_ID:
+               return ContactMeetingContract.CONTENT_ITEM_TYPE;
             default:
                 throw new IllegalArgumentException("Unknown Uri: "+uri);
         }
@@ -164,14 +154,14 @@ public class AppProvider extends ContentProvider{
                 }
                 break;
             case MEETINGS:
-//                db = mOpenHelper.getWritableDatabase();
-//                recordId = db.insert(MeetingContract.Contacts.buildContactsUri(recordId));
-//                if (recordId >= 0) {
-//                    returnUri = MeetingContract.buildMeetingsUri(recordId);
-//                } else {
-//                    throw new android.database.SQLException("Failed to insert into" + uri.toString());
-//                }
-//                break;
+                db = mOpenHelper.getWritableDatabase();
+                recordId = db.insert(MeetingContract.TABLE_NAME, null, values);
+                if (recordId >= 0) {
+                    returnUri = MeetingContract.buildMeetingsUri(recordId);
+                } else {
+                    throw new android.database.SQLException("Failed to insert into" + uri.toString());
+                }
+                break;
 
             default:
                 throw new IllegalArgumentException("Unknown Uri: "+uri);

@@ -36,11 +36,11 @@ public class ContactMeetingContract {
     static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd." + CONTENT_AUTHORITY +"." + TABLE_NAME;
     static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd." + CONTENT_AUTHORITY + "." + TABLE_NAME;
 
-    public static Uri buildContactsUri(long contactId) {
+    public static Uri buildContactsMeetingsUri(long contactId) {
         return ContentUris.withAppendedId(CONTENT_URI, contactId);
     }
 
-    public static long getContactId(Uri uri) {
+    public static long getContactMeetingId(Uri uri) {
         return ContentUris.parseId(uri);
     }
 }

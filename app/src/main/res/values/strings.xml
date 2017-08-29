@@ -27,4 +27,12 @@
     <string name="addeditMeeting_location">Add Meeting Location</string>
     <string name="addeditMeeting_starttime">Meeting Start Time</string>
     <string name="addeditMeeting_endtime">Meeting End Time</string>
+    <string name="addedit_meeting_addcontacts">Add Contacts</string>
+    <string name="addedit_meeting_save">Save</string>
+    <string name="menumain_viewcontacts">View Contacts</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_add_edit_meeting">AddEditMeeting</string>
+    <string name="menuMain_addcontact">Add Contact</string>
+    <string name="hello_world">Hello World</string>
+    <string name="meeting_date">Meeting Date</string>
 </resources>

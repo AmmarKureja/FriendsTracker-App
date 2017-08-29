@@ -1,7 +1,6 @@
 package com.ammarkureja.friendstrackerapp.controller;
 
 import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -21,7 +20,8 @@ import android.widget.ListView;
 
 import com.ammarkureja.friendstrackerapp.R;
 import com.ammarkureja.friendstrackerapp.model.Contact;
-import com.ammarkureja.friendstrackerapp.model.ContactContract;
+import com.ammarkureja.friendstrackerapp.model.Meeting;
+import com.ammarkureja.friendstrackerapp.model.MeetingContract;
 
 import static android.Manifest.permission.READ_CONTACTS;
 import static com.ammarkureja.friendstrackerapp.R.layout.activity_main;
@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     //i-e running on landscape mode in a tablet
     private boolean mTwoPane = false;
     private static final String ADD_EDIT_FRAGMENT = "AddEditFregment";
+    private static final String ADD_EDIT_MEETING_FREGMENT = "AddEditMeetingFregment";
 
     private static final int REQUEST_CODE_READ_CONTACTS = 1;
     // private static boolean READ_CONTACTS_GRANTED;
@@ -45,16 +46,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(activity_main);
 
+    String [] meetingProjection = {MeetingContract.Columns._ID,
+    MeetingContract.Columns.MEETING_TITLE,
+    MeetingContract.Columns.MEETING_START_TIME,
+    MeetingContract.Columns.MEETING_END_TIME,
+    MeetingContract.Columns.MEETING_DATE,
+    MeetingContract.Columns.MEETING_LOCATION};
 
-
-        String[] projection = {ContactContract.Columns._ID,
-                ContactContract.Columns.CONTACT_NAME,
-                ContactContract.Columns.CONTACT_DOB,
-                ContactContract.Columns.CONTACT_EMAIL,
-                ContactContract.Columns.CONTACT_IMAGEURL};
         ContentResolver contentResolver = getContentResolver();
 
-        ContentValues values = new ContentValues();
+//        String[] projection = {ContactContract.Columns._ID,
+//                ContactContract.Columns.CONTACT_NAME,
+//                ContactContract.Columns.CONTACT_DOB,
+//                ContactContract.Columns.CONTACT_EMAIL,
+//                ContactContract.Columns.CONTACT_IMAGEURL};
+//        ContentResolver contentResolver = getContentResolver();
+//
+//        ContentValues values = new ContentValues();
 //
 //        //update multiple rows
 ////        values.put(ContactContract.Columns.CONTACT_NAME, "Jamal");
@@ -88,18 +96,23 @@ public class MainActivity extends AppCompatActivity {
 ////        Log.d(TAG, "onCreate: " + count + " records updated");
 //
         //inserting data into Contacts table
-        values.put(ContactContract.Columns.CONTACT_NAME, "Abubakar");
-        values.put(ContactContract.Columns.CONTACT_DOB, "14-12-1991");
-        values.put(ContactContract.Columns.CONTACT_EMAIL, "abubakar@gmail.com");
-        values.put(ContactContract.Columns.CONTACT_IMAGEURL, "abubakarimageUrl");
-        Uri uri = contentResolver.insert(ContactContract.CONTENT_URI, values);
+//        values.put(ContactContract.Columns.CONTACT_NAME, "Abubakar");
+//        values.put(ContactContract.Columns.CONTACT_DOB, "14-12-1991");
+//        values.put(ContactContract.Columns.CONTACT_EMAIL, "abubakar@gmail.com");
+//        values.put(ContactContract.Columns.CONTACT_IMAGEURL, "abubakarimageUrl");
+//        Uri uri = contentResolver.insert(ContactContract.CONTENT_URI, values);
 
 
-        Cursor cursor = contentResolver.query(ContactContract.CONTENT_URI,
-                projection,
+//        Cursor cursor = contentResolver.query(ContactContract.CONTENT_URI,
+//                projection,
+//                null,
+//                null,
+//                ContactContract.Columns.CONTACT_NAME);
+
+        Cursor cursor = contentResolver.query(MeetingContract.CONTENT_URI, meetingProjection,
                 null,
                 null,
-                ContactContract.Columns.CONTACT_NAME);
+                MeetingContract.Columns.MEETING_TITLE);
 
         if (cursor!=null) {
             Log.d(TAG, "onCreate: On create number of rows: " + cursor.getCount());
@@ -179,10 +192,11 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menuMain_addContact:
                 contactEditRequest(null);
                 break;
-            case R.id.menumain_showContacts:
+            case R.id.menumain_viewContacts:
                 contactlistViewRequest();
                 break;
             case R.id.menumain_addMeeting:
+                meetingEditRequest(null);
                 break;
             case R.id.menumain_viewMeetings:
                 break;
@@ -210,10 +224,29 @@ public class MainActivity extends AppCompatActivity {
                     //editing Task
                     detailIntent.putExtra(Contact.class.getSimpleName(), contact);
                     startActivity(detailIntent);
-                } else { //adding a new task
+                } else { //adding a new contact
                     startActivity(detailIntent);
                 }
             }
+        }
+
+        private void meetingEditRequest (Meeting meeting) {
+            Log.d(TAG, "meetingEditRequest: starts");
+            if (mTwoPane) {
+                Log.d(TAG, "meetingEditRequest: in two pane mode (tablet)");
+            } else {
+                Log.d(TAG, "meetingEditRequest: in a single pane mode");
+                //in single pane mode, start the activity for selected item id
+                Intent detailIntent = new Intent(this, AddEditMeeting.class);
+                if (meeting !=null) {
+                    //editing meeting
+                    detailIntent.putExtra(Contact.class.getSimpleName(), meeting);
+                    startActivity(detailIntent);
+                } else { //adding a new meeting
+                startActivity(detailIntent);
+                }
+            }
+
         }
 
         private void contactlistViewRequest() {
