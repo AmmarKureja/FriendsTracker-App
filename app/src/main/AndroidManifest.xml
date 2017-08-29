@@ -45,6 +45,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ammarkureja.friendstrackerapp.controller.MainActivity" />
         </activity>
+        <activity
+            android:name=".controller.ViewContactsActivity"
+            android:label="@string/title_activity_view_contacts"
+            android:parentActivityName=".controller.AddEditMeeting"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ammarkureja.friendstrackerapp.controller.AddEditMeeting" />
+        </activity>
     </application>
 
 </manifest>

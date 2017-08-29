@@ -6,45 +6,49 @@
     android:layout_height="match_parent"
     tools:context="com.ammarkureja.friendstrackerapp.controller.MainActivity">
 
-    <Button
-        android:id="@+id/btn_manageFriend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:text="Manage Friends"
-        android:onClick="navigateToFriends"
-        app:layout_constraintLeft_toLeftOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+    <include layout="@layout/content_main" />
 
-    <Button
-        android:id="@+id/btn_manageMeetings"
-        android:layout_width="wrap_content"
-        android:layout_height="49dp"
-        android:layout_marginLeft="16dp"
-        android:text="Manage Meetings"
-        android:onClick="navigateToFriends"
-        app:layout_constraintBaseline_toBaselineOf="@+id/btn_manageFriend"
-        app:layout_constraintLeft_toRightOf="@+id/btn_manageFriend" />
+    <!--<Button-->
+        <!--android:id="@+id/btn_manageFriend"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="16dp"-->
+        <!--android:layout_marginStart="16dp"-->
+        <!--android:layout_marginTop="32dp"-->
+        <!--android:text="Manage Friends"-->
+        <!--android:onClick="navigateToFriends"-->
+        <!--app:layout_constraintLeft_toLeftOf="@+id/textView"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/textView" />-->
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="38dp"
-        android:lineSpacingExtra="8sp"
-        android:text="Main Menu"
-        android:textAlignment="center"
-        android:textColor="@android:color/holo_blue_dark"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <!--<Button-->
+        <!--android:id="@+id/btn_manageMeetings"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="49dp"-->
+        <!--android:layout_marginLeft="16dp"-->
+        <!--android:text="Manage Meetings"-->
+        <!--android:onClick="navigateToFriends"-->
+        <!--app:layout_constraintBaseline_toBaselineOf="@+id/btn_manageFriend"-->
+        <!--app:layout_constraintLeft_toRightOf="@+id/btn_manageFriend" />-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/textView"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginEnd="16dp"-->
+        <!--android:layout_marginLeft="16dp"-->
+        <!--android:layout_marginRight="16dp"-->
+        <!--android:layout_marginStart="16dp"-->
+        <!--android:layout_marginTop="38dp"-->
+        <!--android:lineSpacingExtra="8sp"-->
+        <!--android:text="Main Menu"-->
+        <!--android:textAlignment="center"-->
+        <!--android:textColor="@android:color/holo_blue_dark"-->
+        <!--android:textSize="24sp"-->
+        <!--android:textStyle="bold"-->
+        <!--app:layout_constraintHorizontal_bias="0.0"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--app:layout_constraintRight_toRightOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent" />-->
 </android.support.constraint.ConstraintLayout>

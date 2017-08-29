@@ -24,6 +24,7 @@ public class MeetingContract {
         public static final String MEETING_END_TIME = "End_Time";
         public static final String MEETING_DATE = "Meeting_Date";
         public static final String MEETING_LOCATION = "Location";
+        public static final String MEETING_COUNT_CONTACT = "No_Of_Participants";
 
         private Columns() {
             // private constructor to prevent instatiation

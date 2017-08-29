@@ -9,16 +9,20 @@ import java.io.Serializable;
 public class Contact implements Serializable {
     public static final long serialVersionUID = 20161120L;
     private long m_Id;
+    private final String mPhoneId;
     private final String mName;
     private final String mBirth;
     private final String mEmail;
+    private final String mLocation;
     private final String mImageUrl;
 
-    public Contact(long id, String mName, String mBirth, String mEmail, String mImageUrl) {
+    public Contact(long id, String mPhoneId, String mName, String mBirth, String mEmail,String mLocation, String mImageUrl) {
         this.m_Id = id;
+        this.mPhoneId = mPhoneId;
         this.mName = mName;
         this.mBirth = mBirth;
         this.mEmail = mEmail;
+        this.mLocation = mLocation;
         this.mImageUrl = mImageUrl;
     }
 
@@ -28,6 +32,10 @@ public class Contact implements Serializable {
 
     public long getId() {
         return m_Id;
+    }
+
+    public String getmPhoneId() {
+        return mPhoneId;
     }
 
     public String getmName() {
@@ -42,6 +50,10 @@ public class Contact implements Serializable {
         return mEmail;
     }
 
+    public String getmLocation() {
+        return mLocation;
+    }
+
     public String getmImageUrl() {
         return mImageUrl;
     }
@@ -54,9 +66,11 @@ public class Contact implements Serializable {
     public String toString() {
         return "Contact{" +
                 "m_Id=" + m_Id +
+                ", mPhoneId='" + mPhoneId + '\'' +
                 ", mName='" + mName + '\'' +
                 ", mBirth='" + mBirth + '\'' +
                 ", mEmail='" + mEmail + '\'' +
+                ", mLocation='" + mLocation + '\'' +
                 ", mImageUrl='" + mImageUrl + '\'' +
                 '}';
     }

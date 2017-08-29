@@ -162,6 +162,16 @@ public class AppProvider extends ContentProvider{
                     throw new android.database.SQLException("Failed to insert into" + uri.toString());
                 }
                 break;
+            case CONTACTS_MEETINGS:
+                db = mOpenHelper.getWritableDatabase();
+                recordId = db.insert(ContactMeetingContract.TABLE_NAME, null, values);
+                if (recordId >= 0) {
+                    returnUri = ContactMeetingContract.buildContactsMeetingsUri(recordId);
+                } else {
+                    throw new android.database.SQLException("Failed to insert into" + uri.toString());
+                }
+                break;
+
 
             default:
                 throw new IllegalArgumentException("Unknown Uri: "+uri);

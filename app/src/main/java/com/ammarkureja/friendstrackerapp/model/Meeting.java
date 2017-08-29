@@ -15,14 +15,16 @@ public class Meeting implements Serializable {
     private final String meet_EndTime;
     private final String meet_Date;
     private final String meet_Location;
+    private final String meet_Count_Contacts;
 
-    public Meeting(long id, String Title, String startTime, String endTime, String date, String Location) {
+    public Meeting(long id, String Title, String startTime, String endTime, String date, String Location, String Count_Contacts) {
         this.meet_Id = id;
         this.meet_Title = Title;
         this.meet_StartTime = startTime;
         this.meet_EndTime = endTime;
         this.meet_Date = date;
         this.meet_Location = Location;
+        this.meet_Count_Contacts = Count_Contacts;
     }
 
     public long getId() {
@@ -49,6 +51,10 @@ public class Meeting implements Serializable {
         return meet_Location;
     }
 
+    public String getMeet_Count_Contacts() {
+        return meet_Count_Contacts;
+    }
+
     public void setId(long meet_Id) {
         this.meet_Id = meet_Id;
     }
@@ -62,6 +68,7 @@ public class Meeting implements Serializable {
                 ", meet_EndTime='" + meet_EndTime + '\'' +
                 ", meet_Date='" + meet_Date + '\'' +
                 ", meet_Location='" + meet_Location + '\'' +
+                ", meet_Count_Contacts='" + meet_Count_Contacts + '\'' +
                 '}';
     }
 }

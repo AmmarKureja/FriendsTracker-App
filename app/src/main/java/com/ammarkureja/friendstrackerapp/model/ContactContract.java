@@ -19,9 +19,11 @@ public class ContactContract {
 
     public static class Columns {
         public static final String _ID = BaseColumns._ID;
+        public static final String PHONE_ID = "Phone_Id";
         public static final String CONTACT_NAME = "Name";
         public static final String CONTACT_DOB = "Date_Of_Birth";
         public static final String CONTACT_EMAIL = "Email";
+        public static final String CONTACT_LOCATION = "Location";
         public static final String CONTACT_IMAGEURL = "ImageUrl";
 
         private Columns() {

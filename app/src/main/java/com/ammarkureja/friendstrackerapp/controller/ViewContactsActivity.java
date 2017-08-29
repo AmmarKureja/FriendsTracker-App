@@ -6,18 +6,14 @@ import android.support.v7.widget.Toolbar;
 
 import com.ammarkureja.friendstrackerapp.R;
 
-public class AddEditMeeting extends AppCompatActivity {
-
-
+public class ViewContactsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_edit_meeting);
+        setContentView(R.layout.activity_view_contacts);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
