@@ -27,6 +27,7 @@ public class AddEditActivityFragment extends Fragment {
     private EditText cNameTextView;
     private EditText cEmailTextView;
     private EditText cBirthTextView;
+    private EditText cLocation;
     private Button cSaveButton;
 
     public AddEditActivityFragment() {
@@ -41,6 +42,7 @@ public class AddEditActivityFragment extends Fragment {
         cNameTextView = (EditText) view.findViewById(R.id.addedit_name);
         cEmailTextView = (EditText) view.findViewById(R.id.addedit_email);
         cBirthTextView = (EditText) view.findViewById(R.id.addedit_dateofbirth);
+        cLocation = (EditText) view.findViewById(R.id.addedit_location);
         cSaveButton = (Button) view.findViewById(R.id.addedit_save);
         cMode = FragmentEditMode.Edit;
 
@@ -57,6 +59,7 @@ public class AddEditActivityFragment extends Fragment {
                 cNameTextView.setText(contact.getmName());
                 cEmailTextView.setText(contact.getmEmail());
                 cBirthTextView.setText(contact.getmBirth());
+                cLocation.setText(contact.getmLocation());
                 cMode = FragmentEditMode.Edit;
 
             } else {
@@ -99,6 +102,9 @@ public class AddEditActivityFragment extends Fragment {
                         if (!cBirthTextView.getText().toString().equals(contact.getmBirth())) {
                             contentValues.put(ContactContract.Columns.CONTACT_DOB, cBirthTextView.getText().toString());
                         }
+                        if (!cLocation.getText().toString().equals(contact.getmLocation())) {
+                            contentValues.put(ContactContract.Columns.CONTACT_LOCATION, cLocation.getText().toString());
+                        }
                         // if any value is changed than it needs to be updated
                         if (contentValues.size() != 0) {
                             Log.d(TAG, "onClick: updating contact");
@@ -111,6 +117,7 @@ public class AddEditActivityFragment extends Fragment {
                         contentValues.put(ContactContract.Columns.CONTACT_NAME, cNameTextView.getText().toString());
                         contentValues.put(ContactContract.Columns.CONTACT_DOB, cBirthTextView.getText().toString());
                         contentValues.put(ContactContract.Columns.CONTACT_EMAIL, cEmailTextView.getText().toString());
+                        contentValues.put(ContactContract.Columns.CONTACT_LOCATION, cLocation.getText().toString());
                         contentResolver.insert(ContactContract.CONTENT_URI, contentValues);
 
                         break;

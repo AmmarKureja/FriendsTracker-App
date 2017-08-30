@@ -16,7 +16,7 @@ public class Contact implements Serializable {
     private final String mLocation;
     private final String mImageUrl;
 
-    public Contact(long id, String mPhoneId, String mName, String mBirth, String mEmail,String mLocation, String mImageUrl) {
+    public Contact(long id, String mPhoneId, String mName, String mBirth, String mEmail, String mLocation, String mImageUrl) {
         this.m_Id = id;
         this.mPhoneId = mPhoneId;
         this.mName = mName;

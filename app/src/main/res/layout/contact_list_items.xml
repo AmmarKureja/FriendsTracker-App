@@ -30,11 +30,11 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/cli_edit"
-        app:layout_constraintTop_toBottomOf="@+id/cli_phone"
+        app:layout_constraintTop_toBottomOf="@+id/cli_location"
         tools:text="Enter Email" />
 
     <TextView
-        android:id="@+id/cli_phone"
+        android:id="@+id/cli_location"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
@@ -45,7 +45,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/cli_edit"
         app:layout_constraintTop_toBottomOf="@+id/cli_name"
-        tools:text="Enter phone number" />
+        tools:text="@string/location" />
 
     <ImageButton
         android:id="@+id/cli_edit"

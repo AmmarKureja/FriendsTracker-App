@@ -53,7 +53,7 @@ public class AppDatabase extends SQLiteOpenHelper{
                 + ContactContract.Columns.CONTACT_NAME + " TEXT NOT NULL, "
                 + ContactContract.Columns.CONTACT_DOB + " VARCHAR, "
                 + ContactContract.Columns.CONTACT_EMAIL + " VARCHAR, "
-                + ContactContract.Columns.CONTACT_LOCATION + "VARCHAR, "
+                + ContactContract.Columns.CONTACT_LOCATION + " VARCHAR, "
                 + ContactContract.Columns.CONTACT_IMAGEURL + " VARCHAR);";
         Log.d(TAG, "Contacts Table Created");
         db.execSQL(sSQL);
@@ -67,7 +67,7 @@ public class AppDatabase extends SQLiteOpenHelper{
                 + MeetingContract.Columns.MEETING_END_TIME + " VARCHAR, "
                 + MeetingContract.Columns.MEETING_DATE + " VARCHAR, "
                 + MeetingContract.Columns.MEETING_LOCATION + " VARCHAR, "
-                +MeetingContract.Columns.MEETING_COUNT_CONTACT + " VARCHAR);";
+                + MeetingContract.Columns.MEETING_COUNT_CONTACT + " VARCHAR);";
 
         db.execSQL(sSQL);
         Log.d(TAG, "Meeting Table Created");
