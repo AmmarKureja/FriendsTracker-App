@@ -242,7 +242,7 @@ public class MainActivity extends AppCompatActivity implements CursorRecyclerVie
 
     @Override
     public void onDeleteClick(Meeting meeting) {
-
+        getContentResolver().delete(MeetingContract.buildMeetingsUri(meeting.getId()), null, null);
     }
 
     private void  contactEditRequest (Contact contact) {

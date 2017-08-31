@@ -23,10 +23,16 @@ class CursorRecyclerViewAdapter_Contacts extends RecyclerView.Adapter<CursorRecy
     private static final String TAG = "CursorRecyclerViewAdapt";
 
     private Cursor cCursor;
+    private OnContactClickListener cListener;
+    interface OnContactClickListener {
+        void onEditClick(Contact contact);
+        void onDeleteClick(Contact contact);
+    }
 
-    public CursorRecyclerViewAdapter_Contacts(Cursor cCursor) {
+    public CursorRecyclerViewAdapter_Contacts(Cursor cCursor, OnContactClickListener listener) {
         Log.d(TAG, "CursorRecyclerViewAdapter_Contacts: constructor called");
         this.cCursor = cCursor;
+        this.cListener = listener;
     }
 
     @Override
@@ -76,9 +82,20 @@ class CursorRecyclerViewAdapter_Contacts extends RecyclerView.Adapter<CursorRecy
             View.OnClickListener buttonListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.d(TAG, "onClick: starts");
-                    Log.d(TAG, "onClick: button with id "+ view.getId() + "clicked");
-                    Log.d(TAG, "onClick: contact name is: " + contact.getmName());
+                    switch (view.getId()) {
+                        case R.id.cli_edit:
+                            if (cListener != null){
+                                cListener.onEditClick(contact);
+                            }
+                            break;
+                        case R.id.cli_delete:
+                            if (cListener !=null) {
+                                cListener.onDeleteClick(contact);
+                            }
+                            break;
+                        default:
+                            Log.d(TAG, "onClick: unexpected button id");
+                    }
                 }
             };
 

@@ -49,7 +49,7 @@ public class ViewContactsActivityFragment extends Fragment implements LoaderMana
         View view = inflater.inflate(R.layout.fragment_view_contacts, container, false);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.contact_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        cAdapter = new CursorRecyclerViewAdapter_Contacts(null);
+        cAdapter = new CursorRecyclerViewAdapter_Contacts(null, (CursorRecyclerViewAdapter_Contacts.OnContactClickListener) getActivity());
         recyclerView.setAdapter(cAdapter);
         Log.d(TAG, "onCreateView: ends");
         return view;
