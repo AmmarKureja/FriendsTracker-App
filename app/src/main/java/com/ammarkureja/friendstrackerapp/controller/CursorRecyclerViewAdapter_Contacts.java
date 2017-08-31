@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ammarkureja.friendstrackerapp.R;
+import com.ammarkureja.friendstrackerapp.model.Contact;
 import com.ammarkureja.friendstrackerapp.model.ContactContract;
 
 /**
@@ -51,13 +52,38 @@ class CursorRecyclerViewAdapter_Contacts extends RecyclerView.Adapter<CursorRecy
             if (!cCursor.moveToPosition(position)) {
                 throw new IllegalStateException("Cursor couldnt move to the position "+position);
             }
-            holder.name.setText(cCursor.getString(cCursor.getColumnIndex(ContactContract.Columns.CONTACT_NAME)));
-            holder.email.setText(cCursor.getString(cCursor.getColumnIndex(ContactContract.Columns.CONTACT_EMAIL)));
-            holder.dob.setText(cCursor.getString(cCursor.getColumnIndex(ContactContract.Columns.CONTACT_DOB)));
-            holder.location.setText(cCursor.getString(cCursor.getColumnIndex(ContactContract.Columns.CONTACT_LOCATION)));
-            holder.profile_pic.setVisibility(View.GONE);
+
+
+            final Contact contact = new Contact(cCursor.getLong(cCursor.getColumnIndex(ContactContract.Columns._ID)),
+                    cCursor.getString(cCursor.getColumnIndex(ContactContract.Columns.PHONE_ID)),
+                    cCursor.getString(cCursor.getColumnIndex(ContactContract.Columns.CONTACT_NAME)),
+                    cCursor.getString(cCursor.getColumnIndex(ContactContract.Columns.CONTACT_DOB)),
+                    cCursor.getString(cCursor.getColumnIndex(ContactContract.Columns.CONTACT_EMAIL)),
+                    cCursor.getString(cCursor.getColumnIndex(ContactContract.Columns.CONTACT_LOCATION)),
+                    cCursor.getString(cCursor.getColumnIndex(ContactContract.Columns.CONTACT_IMAGEURL)));
+
+
+            holder.name.setText(contact.getmName());
+            holder.email.setText(contact.getmEmail());
+            holder.dob.setText(contact.getmBirth());
+            holder.location.setText(contact.getmLocation());
+            holder.profile_pic.setVisibility(View.VISIBLE);
             holder.editButton.setVisibility(View.VISIBLE); //TODO ADD ON CLICKLISTENER
             holder.deleteButton.setVisibility(View.VISIBLE); //TODO ADD ON CLICKLISTENER
+
+
+            //this is the button listener for recycler view both edit/delete button
+            View.OnClickListener buttonListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.d(TAG, "onClick: starts");
+                    Log.d(TAG, "onClick: button with id "+ view.getId() + "clicked");
+                    Log.d(TAG, "onClick: contact name is: " + contact.getmName());
+                }
+            };
+
+            holder.editButton.setOnClickListener(buttonListener);
+            holder.deleteButton.setOnClickListener(buttonListener);
 
         }
     }
@@ -84,7 +110,7 @@ class CursorRecyclerViewAdapter_Contacts extends RecyclerView.Adapter<CursorRecy
             notifyDataSetChanged();
         } else {
             // notify the observers about the lack of data set
-            notifyItemRangeChanged(0, getItemCount());
+            notifyItemRangeRemoved(0, getItemCount());
         }
 
         return oldCursor;

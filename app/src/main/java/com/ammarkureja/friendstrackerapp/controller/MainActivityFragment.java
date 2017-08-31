@@ -48,7 +48,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.meeting_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        mAdapter = new CursorRecyclerViewAdapter_Meetings(null);
+        mAdapter = new CursorRecyclerViewAdapter_Meetings(null, (CursorRecyclerViewAdapter_Meetings.OnMeetingClickListener) getActivity());
         recyclerView.setAdapter(mAdapter);
         Log.d(TAG, "onCreateView: returning");
         return view;
@@ -57,7 +57,8 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         Log.d(TAG, "onCreateLoader: starts with id: "+ id);
-        String [] projection = {MeetingContract.Columns.MEETING_TITLE,
+        String [] projection = {MeetingContract.Columns._ID,
+                MeetingContract.Columns.MEETING_TITLE,
                 MeetingContract.Columns.MEETING_LOCATION,
                 MeetingContract.Columns.MEETING_DATE,
                 MeetingContract.Columns.MEETING_START_TIME,
@@ -68,7 +69,9 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
             case LOADER_ID:
                 return new CursorLoader(getActivity(),
                         MeetingContract.CONTENT_URI,
-                        projection, null, null,
+                        projection,
+                        null,
+                        null,
                         sortOrder);
             default:
                 throw new InvalidParameterException(TAG + ".onCreateLoader called with invalid id" + id);

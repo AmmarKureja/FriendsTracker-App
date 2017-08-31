@@ -1,11 +1,13 @@
 package com.ammarkureja.friendstrackerapp.controller;
 
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.provider.Settings;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -20,13 +22,15 @@ import android.widget.ListView;
 
 import com.ammarkureja.friendstrackerapp.R;
 import com.ammarkureja.friendstrackerapp.model.Contact;
+import com.ammarkureja.friendstrackerapp.model.ContactContract;
 import com.ammarkureja.friendstrackerapp.model.Meeting;
 import com.ammarkureja.friendstrackerapp.model.MeetingContract;
 
 import static android.Manifest.permission.READ_CONTACTS;
 import static com.ammarkureja.friendstrackerapp.R.layout.activity_main;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CursorRecyclerViewAdapter_Meetings.OnMeetingClickListener{
+
     private static final String TAG = "MainActivity";
     private ListView listApp;
     //wether the activity is in 2-pane mode
@@ -150,13 +154,32 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void navigateToFriends(View view) {
+    public void readContactsPermission(View view) {
         Log.d(TAG, "onClick: starts");
         if (ContextCompat.checkSelfPermission(MainActivity.this, READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
-            Intent intent = new Intent(this, activity_friend.class);
-            MainActivity.this.startActivity(intent);
-//
-        } else {
+            ContentResolver cr = getContentResolver();
+            ContentValues contentValues = new ContentValues();
+            Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
+            if (cur.moveToFirst()) {
+
+                do {
+                    contentValues.put(ContactContract.Columns.PHONE_ID, cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID)));
+                    String id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
+                    Cursor cur1 = cr.query(
+                            ContactsContract.CommonDataKinds.Email.CONTENT_URI, null,
+                            ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = ?",
+                            new String[]{id}, null);
+                    while (cur1.moveToNext()) {
+                        //to get the contact names
+                        contentValues.put(ContactContract.Columns.CONTACT_NAME, cur1.getString(cur1.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)));
+                        contentValues.put(ContactContract.Columns.CONTACT_EMAIL, cur1.getString(cur1.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA)));
+                    }
+                    cr.insert(ContactContract.CONTENT_URI, contentValues);
+                    cur1.close();
+                } while (cur.moveToNext());
+                cur.close();
+            }
+        }else {
             Snackbar.make(view, "This App cant display your contacts records unless you grant access", Snackbar.LENGTH_INDEFINITE)
                     .setAction("Grant Access", new View.OnClickListener() {
                                 @Override
@@ -212,7 +235,17 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        private void  contactEditRequest (Contact contact) {
+    @Override
+    public void onEditClick(Meeting meeting) {
+        meetingEditRequest(meeting);
+    }
+
+    @Override
+    public void onDeleteClick(Meeting meeting) {
+
+    }
+
+    private void  contactEditRequest (Contact contact) {
             Log.d(TAG, "contactEditRequest: starts");
             if (mTwoPane) {
                 Log.d(TAG, "contactEditRequest: in two pane mode (tablet)");
@@ -240,7 +273,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent detailIntent = new Intent(this, AddEditMeeting.class);
                 if (meeting !=null) {
                     //editing meeting
-                    detailIntent.putExtra(Contact.class.getSimpleName(), meeting);
+                    detailIntent.putExtra(Meeting.class.getSimpleName(), meeting);
                     startActivity(detailIntent);
                 } else { //adding a new meeting
                 startActivity(detailIntent);
@@ -250,8 +283,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
         private void contactlistViewRequest() {
-            Intent viewFriendlist = new Intent(this, ViewFriendsActivity.class);
-            startActivity(viewFriendlist);
+
+            Intent intent = new Intent(MainActivity.this, ViewContactsActivity.class);
+            startActivity(intent);
+
+        }
+
+
+        private void readContacts() {
+
+
 
         }
 

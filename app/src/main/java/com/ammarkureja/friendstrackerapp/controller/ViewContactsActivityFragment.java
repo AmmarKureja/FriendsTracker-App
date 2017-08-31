@@ -60,10 +60,12 @@ public class ViewContactsActivityFragment extends Fragment implements LoaderMana
 
 
         String [] projection = {ContactContract.Columns._ID,
+                ContactContract.Columns.PHONE_ID,
                 ContactContract.Columns.CONTACT_NAME,
                 ContactContract.Columns.CONTACT_DOB,
                 ContactContract.Columns.CONTACT_EMAIL,
-                ContactContract.Columns.CONTACT_LOCATION};
+                ContactContract.Columns.CONTACT_LOCATION,
+                ContactContract.Columns.CONTACT_IMAGEURL};
         String sortOrder = ContactContract.Columns.CONTACT_NAME + "," + ContactContract.Columns.CONTACT_EMAIL;
         switch (id) {
             case LOADER_ID:

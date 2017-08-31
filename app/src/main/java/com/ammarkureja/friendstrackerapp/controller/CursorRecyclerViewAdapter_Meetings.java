@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.ammarkureja.friendstrackerapp.R;
+import com.ammarkureja.friendstrackerapp.model.Meeting;
 import com.ammarkureja.friendstrackerapp.model.MeetingContract;
 
 /**
@@ -20,15 +21,21 @@ class CursorRecyclerViewAdapter_Meetings extends RecyclerView.Adapter<CursorRecy
 
     private static final String TAG = "CursorRecyclerViewAdapt";
     private Cursor mCursor;
+    private OnMeetingClickListener mListener;
+    interface OnMeetingClickListener {
+        void onEditClick(Meeting meeting);
+        void onDeleteClick(Meeting meeting);
+    }
 
-    public CursorRecyclerViewAdapter_Meetings(Cursor mCursor) {
+    public CursorRecyclerViewAdapter_Meetings(Cursor myCursor, OnMeetingClickListener listener) {
         Log.d(TAG, "CurRcyclrVwAdptrMeet:Con called");
-        this.mCursor = mCursor;
+       mCursor = myCursor;
+        mListener = listener;
     }
 
     @Override
     public MeetingViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Log.d(TAG, "onCreateViewHolder: new View requested");
+        //Log.d(TAG, "onCreateViewHolder: new View requested");
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.meeting_list_items, parent, false);
         return new MeetingViewHolder(view);
 
@@ -36,7 +43,7 @@ class CursorRecyclerViewAdapter_Meetings extends RecyclerView.Adapter<CursorRecy
 
     @Override
     public void onBindViewHolder(MeetingViewHolder holder, int position) {
-        Log.d(TAG, "onBindViewHolder: starts");
+        //Log.d(TAG, "onBindViewHolder: starts");
 
         if ((mCursor == null) || (mCursor.getCount() == 0)) {
             Log.d(TAG, "onBindViewHolder: providing instructions");
@@ -53,21 +60,61 @@ class CursorRecyclerViewAdapter_Meetings extends RecyclerView.Adapter<CursorRecy
             if (!mCursor.moveToPosition(position)) {
                 throw new IllegalStateException("Couldnt move cursor to position " + position);
             }
-            holder.title.setText(mCursor.getString(mCursor.getColumnIndex(MeetingContract.Columns.MEETING_TITLE)));
-            holder.statTime.setText(mCursor.getString(mCursor.getColumnIndex(MeetingContract.Columns.MEETING_START_TIME)));
-            holder.endTime.setText(mCursor.getString(mCursor.getColumnIndex(MeetingContract.Columns.MEETING_END_TIME)));
-            holder.location.setText(mCursor.getString(mCursor.getColumnIndex(MeetingContract.Columns.MEETING_LOCATION)));
-            holder.date.setText(mCursor.getString(mCursor.getColumnIndex(MeetingContract.Columns.MEETING_DATE)));
-            holder.countParticipants.setText(mCursor.getString(mCursor.getColumnIndex(MeetingContract.Columns.MEETING_COUNT_CONTACT)));
+
+        final    Meeting meeting = new Meeting(mCursor.getLong(mCursor.getColumnIndex(MeetingContract.Columns._ID)),
+                    mCursor.getString(mCursor.getColumnIndex(MeetingContract.Columns.MEETING_TITLE)),
+                    mCursor.getString(mCursor.getColumnIndex(MeetingContract.Columns.MEETING_LOCATION)),
+                    mCursor.getString(mCursor.getColumnIndex(MeetingContract.Columns.MEETING_DATE)),
+                    mCursor.getString(mCursor.getColumnIndex(MeetingContract.Columns.MEETING_START_TIME)),
+                    mCursor.getString(mCursor.getColumnIndex(MeetingContract.Columns.MEETING_END_TIME)),
+                    mCursor.getString(mCursor.getColumnIndex(MeetingContract.Columns.MEETING_COUNT_CONTACT)));
+
+
+            holder.title.setText(meeting.getTitle());
+            holder.statTime.setText(meeting.getStartTime());
+            holder.endTime.setText(meeting.getEndTime());
+            holder.location.setText(meeting.getLocation());
+            holder.date.setText(meeting.getMeet_Date());
+            holder.countParticipants.setText(meeting.getMeet_Count_Contacts());
             holder.editButton.setVisibility(View.VISIBLE); //TODO ADD ON CLICKLISTENER
             holder.deleteButton.setVisibility(View.VISIBLE); //TODO ADD ON CLICKLISTENER
+
+            //this is the button listener for recycler view both edit/delete button
+            View.OnClickListener buttonListener = new View.OnClickListener(){
+                @Override
+                public void onClick(View view){
+                    //Log.d(TAG, "onClick: starts");
+                    switch (view.getId()) {
+                        case R.id.mli_edit_item:
+                            if (mListener != null){
+                        mListener.onEditClick(meeting);
+                            }
+                            break;
+                        case R.id.mli_delete_item:
+                            if (mListener !=null) {
+                                mListener.onDeleteClick(meeting);
+                            }
+                            break;
+                        default:
+                            Log.d(TAG, "onClick: unexpected button id");
+                    }
+                   // Log.d(TAG, "onClick: meeting id is: "+ meeting.getId());
+                   // Log.d(TAG, "onClick: meeting name is: " + meeting.getTitle());
+
+                }
+            };
+
+
+
+            holder.editButton.setOnClickListener(buttonListener);
+            holder.deleteButton.setOnClickListener(buttonListener);
         }
 
     }
 
     @Override
     public int getItemCount() {
-        Log.d(TAG, "getItemCount: starts");
+      //  Log.d(TAG, "getItemCount: starts");
         if ((mCursor== null) || (mCursor.getCount() == 0)) {
             return 1; //
         } else {
@@ -95,7 +142,7 @@ class CursorRecyclerViewAdapter_Meetings extends RecyclerView.Adapter<CursorRecy
             notifyDataSetChanged();
         } else {
             // notify the observers about the lack of data set
-            notifyItemRangeChanged(0, getItemCount());
+            notifyItemRangeRemoved(0, getItemCount());
         }
 
         return oldCursor;
@@ -116,7 +163,7 @@ class CursorRecyclerViewAdapter_Meetings extends RecyclerView.Adapter<CursorRecy
 
         public MeetingViewHolder(View itemView ) {
             super(itemView);
-            Log.d(TAG, "MeetingViewHolder: starts");
+          //  Log.d(TAG, "MeetingViewHolder: starts");
             this.title = (TextView) itemView.findViewById(R.id.mli_title);
             this.statTime = (TextView) itemView.findViewById(R.id.mli_start_time);
             this.endTime = (TextView) itemView.findViewById(R.id.mli_end_time);

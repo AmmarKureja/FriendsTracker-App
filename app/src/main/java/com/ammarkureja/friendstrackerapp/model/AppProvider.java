@@ -100,7 +100,9 @@ public class AppProvider extends ContentProvider{
         SQLiteDatabase db = mOpenHelper.getReadableDatabase();
         //returning cursor
         Cursor cursor = queryBuilder.query(db, projection, selection, selectionArgs, null, null, sortOrder);
-        Log.d(TAG, "query cursor: "+cursor);
+        Log.d(TAG, "query rows in returned cursor = : "+cursor.getCount()); //TODO REMOVE THIS LINE
+
+        cursor.setNotificationUri(getContext().getContentResolver(), uri);
         return cursor;
 
 
@@ -176,6 +178,14 @@ public class AppProvider extends ContentProvider{
             default:
                 throw new IllegalArgumentException("Unknown Uri: "+uri);
         }
+
+        if (recordId >= 0) {
+            //something was inserted
+            Log.d(TAG, "insert: Setting notify change with "+uri );
+            getContext().getContentResolver().notifyChange(uri, null);
+        } else {
+            Log.d(TAG, "insert: nothing inserted");
+        }
         Log.d(TAG, "Exiting insert and returning Uri: "+uri);
         return returnUri;
     }
@@ -215,22 +225,45 @@ public class AppProvider extends ContentProvider{
                 break;
 
 
-//            case MEETINGS:
-//                db = mOpenHelper.getWritableDatabase();
-//                count = db.delete(MeetingContract.TABLE_NAME, selection, selectionArgs);
-//                break;
-//            case MEETINGS_ID:
-//                db = mOpenHelper.getWritableDatabase();
-//                long meetingId = MeetingContract.getContactId(uri);
-//                selectionCriteria = MeetingContract.Columns._ID + " = " +  meetingId;
-//                if (selection !=null && (selection.length()>0)) {
-//                    selectionCriteria += " AND (" + selection + ")";
-//                }
-//                count = db.delete(MeetingContract.TABLE_NAME, selectionCriteria, selectionArgs);
-//                break;
+            case MEETINGS:
+                db = mOpenHelper.getWritableDatabase();
+                count = db.delete(MeetingContract.TABLE_NAME, selection, selectionArgs);
+                break;
+            case MEETINGS_ID:
+                db = mOpenHelper.getWritableDatabase();
+                long meetingId = MeetingContract.getMeetingId(uri);
+                selectionCriteria = MeetingContract.Columns._ID + " = " +  meetingId;
+                if (selection !=null && (selection.length()>0)) {
+                    selectionCriteria += " AND (" + selection + ")";
+                }
+                count = db.delete(MeetingContract.TABLE_NAME, selectionCriteria, selectionArgs);
+                break;
+
+
+            case CONTACTS_MEETINGS:
+                db = mOpenHelper.getWritableDatabase();
+                count = db.delete(MeetingContract.TABLE_NAME, selection, selectionArgs);
+                break;
+            case CONTACTS_MEETINGS_ID:
+                db = mOpenHelper.getWritableDatabase();
+                long contactMeeting = ContactMeetingContract.getContactMeetingId(uri);
+                selectionCriteria = ContactMeetingContract.Columns._ID + " = " +  contactMeeting;
+                if (selection !=null && (selection.length()>0)) {
+                    selectionCriteria += " AND (" + selection + ")";
+                }
+                count = db.delete(ContactMeetingContract.TABLE_NAME, selectionCriteria, selectionArgs);
+                break;
 
             default:
                 throw new IllegalArgumentException("Unknown Uri: "+ uri);
+        }
+
+        if (count > 0) {
+            //something was deleted
+            Log.d(TAG, "delete: setting notify change with "+ uri);
+            getContext().getContentResolver().notifyChange(uri, null);
+        } else {
+            Log.d(TAG, "delete: nothing deleted");
         }
 
         Log.d(TAG, "Exiting update: " + count);
@@ -265,22 +298,45 @@ public class AppProvider extends ContentProvider{
                 break;
 
 
-//            case MEETINGS:
-//                db = mOpenHelper.getWritableDatabase();
-//                count = db.update(MeetingContract.TABLE_NAME, values, selection, selectionArgs);
-//                break;
-//            case MEETINGS_ID:
-//                db = mOpenHelper.getWritableDatabase();
-//                long meetingId = MeetingContract.getContactId(uri);
-//                selectionCriteria = MeetingContract.Columns._ID + " = " +  meetingId;
-//                if (selection !=null && (selection.length()>0)) {
-//                    selectionCriteria += " AND (" + selection + ")";
-//                }
-//                count = db.update(MeetingContract.TABLE_NAME, values, selectionCriteria, selectionArgs);
-//                break;
+            case MEETINGS:
+                db = mOpenHelper.getWritableDatabase();
+                count = db.update(MeetingContract.TABLE_NAME, values, selection, selectionArgs);
+                break;
+            case MEETINGS_ID:
+                db = mOpenHelper.getWritableDatabase();
+                long meetingId = MeetingContract.getMeetingId(uri);
+                selectionCriteria = MeetingContract.Columns._ID + " = " +  meetingId;
+                if (selection !=null && (selection.length()>0)) {
+                    selectionCriteria += " AND (" + selection + ")";
+                }
+                count = db.update(MeetingContract.TABLE_NAME, values, selectionCriteria, selectionArgs);
+                break;
+
+
+            case CONTACTS_MEETINGS:
+                db = mOpenHelper.getWritableDatabase();
+                count = db.update(ContactMeetingContract.TABLE_NAME, values, selection, selectionArgs);
+                break;
+            case CONTACTS_MEETINGS_ID:
+                db = mOpenHelper.getWritableDatabase();
+                long contactMeeting = ContactMeetingContract.getContactMeetingId(uri);
+                selectionCriteria = ContactMeetingContract.Columns._ID + " = " +  contactMeeting;
+                if (selection !=null && (selection.length()>0)) {
+                    selectionCriteria += " AND (" + selection + ")";
+                }
+                count = db.update(ContactMeetingContract.TABLE_NAME, values, selectionCriteria, selectionArgs);
+                break;
 
             default:
                 throw new IllegalArgumentException("Unknown Uri: "+ uri);
+        }
+
+        if (count > 0) {
+            //something was deleted
+            Log.d(TAG, "update: setting notify change with "+ uri);
+            getContext().getContentResolver().notifyChange(uri, null);
+        } else {
+            Log.d(TAG, "update: nothing deleted");
         }
 
         Log.d(TAG, "Exiting update: " + count);
