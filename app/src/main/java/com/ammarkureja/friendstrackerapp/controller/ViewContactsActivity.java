@@ -14,6 +14,7 @@ public class ViewContactsActivity extends AppCompatActivity implements CursorRec
     private static final String TAG = "ViewContactsActivity";
     private boolean mTwoPane = false;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +24,7 @@ public class ViewContactsActivity extends AppCompatActivity implements CursorRec
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
 
     @Override

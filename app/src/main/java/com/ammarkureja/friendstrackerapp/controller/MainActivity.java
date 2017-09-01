@@ -42,7 +42,8 @@ public class MainActivity extends AppCompatActivity implements CursorRecyclerVie
     private static final int REQUEST_CODE_READ_CONTACTS = 1;
     // private static boolean READ_CONTACTS_GRANTED;
     Button btn_manageFriends = null;
-    Button btn_manageMeetings = null;
+    Button btn_addPhoneContacts = null;
+
 
 
     @Override
@@ -58,6 +59,12 @@ public class MainActivity extends AppCompatActivity implements CursorRecyclerVie
     MeetingContract.Columns.MEETING_LOCATION};
 
         ContentResolver contentResolver = getContentResolver();
+
+        btn_addPhoneContacts = (Button) findViewById(R.id.addPhoneContacts_btn);
+
+        btn_addPhoneContacts.setOnClickListener(contactsBtnListener);
+
+
 
 //        String[] projection = {ContactContract.Columns._ID,
 //                ContactContract.Columns.CONTACT_NAME,
@@ -130,29 +137,33 @@ public class MainActivity extends AppCompatActivity implements CursorRecyclerVie
         }
         cursor.close();
 
-//        AppDatabase appDatabase = AppDatabase.getInstance(this);
-//        final SQLiteDatabase db = appDatabase.getReadableDatabase();
-
-
-
         listApp = (ListView) findViewById(R.id.contact_list);
         //for Api 23 and above, we need to get explicit permission each time when accessing phone contatcs
         int hasReadContactPermission = ContextCompat.checkSelfPermission(this, READ_CONTACTS);
         Log.d(TAG, "onCreate: check self permission = " + hasReadContactPermission);
-//        if (hasReadContactPermission == PackageManager.PERMISSION_GRANTED) {
-//            Log.d(TAG, "onCreate: permission granted");
-//            // READ_CONTACTS_GRANTED = true;
-//        } else {
-//            Log.d(TAG, "onCreate: requesting permission");
-//            ActivityCompat.requestPermissions(this, new String[]{READ_CONTACTS}, REQUEST_CODE_READ_CONTACTS);
-//        }
+        if (hasReadContactPermission == PackageManager.PERMISSION_GRANTED) {
+            Log.d(TAG, "onCreate: permission granted");
+            // READ_CONTACTS_GRANTED = true;
+        } else {
+            Log.d(TAG, "onCreate: requesting permission");
+            ActivityCompat.requestPermissions(this, new String[]{READ_CONTACTS}, REQUEST_CODE_READ_CONTACTS);
+        }
         if (hasReadContactPermission != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{READ_CONTACTS}, REQUEST_CODE_READ_CONTACTS);
         }
 
+
+
+
+
+
         Log.d(TAG, "onCreate: ends");
 
+
+
     }
+
+
 
     public void readContactsPermission(View view) {
         Log.d(TAG, "onClick: starts");
@@ -187,6 +198,7 @@ public class MainActivity extends AppCompatActivity implements CursorRecyclerVie
                                     //Toast.makeText(MainActivity.this, "Snackbar Action Clicked", Toast.LENGTH_SHORT).show();
                                     if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, READ_CONTACTS)) {
                                         ActivityCompat.requestPermissions(MainActivity.this, new String[]{READ_CONTACTS}, REQUEST_CODE_READ_CONTACTS);
+                                        btn_addPhoneContacts.setVisibility(View.VISIBLE);
                                     } else {
                                         Intent intent = new Intent();
                                         intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
@@ -224,6 +236,7 @@ public class MainActivity extends AppCompatActivity implements CursorRecyclerVie
             case R.id.menumain_viewMeetings:
                 break;
             case R.id.menumain_settings:
+                readContactsPermission(findViewById(R.id.menumain_settings));
                 break;
             case R.id.menumain_showAbout:
                 break;
@@ -244,6 +257,7 @@ public class MainActivity extends AppCompatActivity implements CursorRecyclerVie
     public void onDeleteClick(Meeting meeting) {
         getContentResolver().delete(MeetingContract.buildMeetingsUri(meeting.getId()), null, null);
     }
+
 
     private void  contactEditRequest (Contact contact) {
             Log.d(TAG, "contactEditRequest: starts");
@@ -290,11 +304,12 @@ public class MainActivity extends AppCompatActivity implements CursorRecyclerVie
         }
 
 
-        private void readContacts() {
-
-
-
+    private View.OnClickListener contactsBtnListener = new View.OnClickListener() {
+        public void onClick(View v) {
+            readContactsPermission(v);
+            btn_addPhoneContacts.setVisibility(View.GONE);
         }
+    };
 
 
 

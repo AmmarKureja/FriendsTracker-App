@@ -25,6 +25,7 @@ class CursorRecyclerViewAdapter_Meetings extends RecyclerView.Adapter<CursorRecy
     interface OnMeetingClickListener {
         void onEditClick(Meeting meeting);
         void onDeleteClick(Meeting meeting);
+
     }
 
     public CursorRecyclerViewAdapter_Meetings(Cursor myCursor, OnMeetingClickListener listener) {
@@ -161,6 +162,7 @@ class CursorRecyclerViewAdapter_Meetings extends RecyclerView.Adapter<CursorRecy
         ImageButton editButton = null;
         ImageButton deleteButton = null;
 
+
         public MeetingViewHolder(View itemView ) {
             super(itemView);
           //  Log.d(TAG, "MeetingViewHolder: starts");
@@ -172,6 +174,7 @@ class CursorRecyclerViewAdapter_Meetings extends RecyclerView.Adapter<CursorRecy
             this.countParticipants = (TextView) itemView.findViewById(R.id.mli_number_of_attendees);
             this.editButton = (ImageButton) itemView.findViewById(R.id.mli_edit_item);
             this.deleteButton = (ImageButton) itemView.findViewById(R.id.mli_delete_item);
+
 
         }
     }

@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.ammarkureja.friendstrackerapp.R;
 import com.ammarkureja.friendstrackerapp.model.MeetingContract;
@@ -24,12 +25,21 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     private static final String TAG = "MainActivityFragment";
 
     public static final int LOADER_ID = 0;
+    private static final int REQUEST_CODE_READ_CONTACTS = 1;
+    private static boolean flag = false;
 
     private CursorRecyclerViewAdapter_Meetings mAdapter; // add adaptor reference
+    Button addContacts;
+
+
+
 
 
     public MainActivityFragment() {
         Log.d(TAG, "MainActivityFragment: ");
+
+
+
     }
 
     @Override
@@ -37,6 +47,12 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
         Log.d(TAG, "onActivityCreated: starts");
         super.onActivityCreated(savedInstanceState);
         getLoaderManager().initLoader(LOADER_ID, null, this);
+
+        addContacts.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Log.d(TAG, "onClick: on Click is working");
+            }
+        });
     }
 
     @Override
@@ -47,6 +63,12 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.meeting_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        final View view2 = inflater.inflate(R.layout.fragment_main, container, false);
+        addContacts=(Button) view2.findViewById(R.id.addPhoneContacts_btn);
+
+
+
 
         mAdapter = new CursorRecyclerViewAdapter_Meetings(null, (CursorRecyclerViewAdapter_Meetings.OnMeetingClickListener) getActivity());
         recyclerView.setAdapter(mAdapter);
@@ -103,6 +125,8 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
         mAdapter.swapCursor(null);
 
     }
+
+
 }
 
 
