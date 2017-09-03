@@ -1,8 +1,11 @@
 package com.ammarkureja.friendstrackerapp.controller;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -57,15 +60,17 @@ public class meetingFriendsFragment extends Fragment implements LoaderManager.Lo
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_addfriends);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), recyclerView, this));
-//        FloatingActionButton fab = (FloatingActionButton) View.findViewById();
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                Intent intent = new Intent(getContext(), AddEditMeeting.class);
+                startActivity(intent);
+            }
+        });
 
         anAdapter = new Meetingfriends_Adapter(null);
         Log.d(TAG, "onCreateView: helloworld");
