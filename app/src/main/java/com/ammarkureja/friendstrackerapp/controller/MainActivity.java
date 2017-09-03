@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements CursorRecyclerVie
     private boolean mTwoPane = false;
     private static final String ADD_EDIT_FRAGMENT = "AddEditFregment";
     private static final String ADD_EDIT_MEETING_FREGMENT = "AddEditMeetingFregment";
+    private static boolean flag = false;
 
     private static final int REQUEST_CODE_READ_CONTACTS = 1;
     // private static boolean READ_CONTACTS_GRANTED;
@@ -62,8 +63,9 @@ public class MainActivity extends AppCompatActivity implements CursorRecyclerVie
 
         btn_addPhoneContacts = (Button) findViewById(R.id.addPhoneContacts_btn);
 
-        btn_addPhoneContacts.setOnClickListener(contactsBtnListener);
-
+        if (flag == false) {
+            btn_addPhoneContacts.setOnClickListener(contactsBtnListener);
+        }
 
 
 //        String[] projection = {ContactContract.Columns._ID,
@@ -188,6 +190,7 @@ public class MainActivity extends AppCompatActivity implements CursorRecyclerVie
                     cr.insert(ContactContract.CONTENT_URI, contentValues);
                     cur1.close();
                 } while (cur.moveToNext());
+                flag = true;
                 cur.close();
             }
         }else {
@@ -306,8 +309,10 @@ public class MainActivity extends AppCompatActivity implements CursorRecyclerVie
 
     private View.OnClickListener contactsBtnListener = new View.OnClickListener() {
         public void onClick(View v) {
-            readContactsPermission(v);
-            btn_addPhoneContacts.setVisibility(View.GONE);
+            if (flag == false) {
+                readContactsPermission(v);
+                btn_addPhoneContacts.setVisibility(View.GONE);
+            }
         }
     };
 

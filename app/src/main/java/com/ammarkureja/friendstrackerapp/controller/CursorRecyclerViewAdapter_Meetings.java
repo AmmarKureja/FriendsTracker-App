@@ -136,6 +136,8 @@ class CursorRecyclerViewAdapter_Meetings extends RecyclerView.Adapter<CursorRecy
             return null;
         }
 
+
+
         final  Cursor oldCursor = mCursor;
         mCursor = newCursor;
         if (newCursor != null) {

@@ -139,7 +139,7 @@ public class AddEditMeetingFragment extends Fragment {
             @Override
             public void onClick (View view) {
 
-                Intent intent = new Intent(getActivity(), ViewContactsActivity.class);
+                Intent intent = new Intent(getActivity(), meetingFriends.class);
                 startActivity(intent);
             }
         });

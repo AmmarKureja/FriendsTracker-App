@@ -54,6 +54,33 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ammarkureja.friendstrackerapp.controller.AddEditMeeting" />
         </activity>
+        <activity
+            android:name=".controller.FriendsInMeetingActivity"
+            android:label="@string/title_activity_friends_in_meeting"
+            android:parentActivityName=".controller.AddEditMeeting"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ammarkureja.friendstrackerapp.controller.AddEditMeeting" />
+        </activity>
+        <activity
+            android:name=".controller.MeetingDetailActivity"
+            android:label="@string/title_activity_meeting_detail"
+            android:parentActivityName=".controller.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ammarkureja.friendstrackerapp.controller.MainActivity" />
+        </activity>
+        <activity
+            android:name=".controller.meetingFriends"
+            android:label="@string/title_activity_meeting_friends"
+            android:parentActivityName=".controller.AddEditMeeting"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ammarkureja.friendstrackerapp.controller.AddEditMeeting" />
+        </activity>
     </application>
 
 </manifest>

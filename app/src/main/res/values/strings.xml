@@ -43,4 +43,7 @@
     <string name="location">Enter Location</string>
     <string name="addedit_location">Enter Location</string>
     <string name="add_phone_contacts">Add Phone Contacts</string>
+    <string name="title_activity_friends_in_meeting">Add Friends for Meeting</string>
+    <string name="title_activity_meeting_detail">Meeting Detail</string>
+    <string name="title_activity_meeting_friends">meetingFriends</string>
 </resources>

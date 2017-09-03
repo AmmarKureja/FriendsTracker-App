@@ -15,9 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ammarkureja.friendstrackerapp.R;
+import com.ammarkureja.friendstrackerapp.model.Contact;
 import com.ammarkureja.friendstrackerapp.model.ContactContract;
 
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -26,6 +29,7 @@ public class ViewContactsActivityFragment extends Fragment implements LoaderMana
 
     public static final int LOADER_ID = 1;
     private CursorRecyclerViewAdapter_Contacts cAdapter; //adds adapter reference
+    List<Contact> contactList = new ArrayList<>();
 
     private static final String TAG = "ViewContactsActivity: ";
 
@@ -74,9 +78,11 @@ public class ViewContactsActivityFragment extends Fragment implements LoaderMana
                         projection, null, null,
                         sortOrder);
             default:
-                throw new InvalidParameterException(TAG + ".onCreateLoader called with invalif id" + id);
+                throw new InvalidParameterException(TAG + ".onCreateLoader called with invalid id" + id);
         }
     }
+
+
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
@@ -84,16 +90,17 @@ public class ViewContactsActivityFragment extends Fragment implements LoaderMana
         Log.d(TAG, "onLoadFinished: Entering onLoad finished");
         cAdapter.swapCursor(data);
         int count = cAdapter.getItemCount();
-//        if (data != null) {
-//            while (data.moveToNext()) {
-//                for (int i = 0; i <data.getColumnCount(); i++) {
-//                    Log.d(TAG, "onLoadFinish " + data.getColumnName(i) + ": "+data.getString(i));
-//                }
-//                Log.d(TAG, "onLoadFinished: =================================");
-//            }
-//            count = data.getCount();
-//        }
-//        Log.d(TAG, "onLoadFinished: count is " + count);
+        if (data != null) {
+            while (data.moveToNext()) {
+                for (int i = 0; i <data.getColumnCount(); i++) {
+                    Log.d(TAG, "onLoadFinish " + data.getColumnName(i) + ": "+data.getString(i));
+                }
+                Log.d(TAG, "onLoadFinished: =================================");
+                contactList.add((Contact) data);
+            }
+            count = data.getCount();
+        }
+        Log.d(TAG, "onLoadFinished: count is " + count);
     }
 
     @Override

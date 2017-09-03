@@ -15,34 +15,31 @@ import com.ammarkureja.friendstrackerapp.model.Contact;
 import com.ammarkureja.friendstrackerapp.model.ContactContract;
 
 
-
-class CursorRecyclerViewAdapter_Contacts extends RecyclerView.Adapter<CursorRecyclerViewAdapter_Contacts.ContactViewHolder> {
+class Meetingfriends_Adapter extends RecyclerView.Adapter<Meetingfriends_Adapter.ContactViewHolder> {
 
     private static final String TAG = "CursorRecyclerViewAdapt";
 
-    private Cursor cCursor;
-    private Contact aContact;
-    private OnContactClickListener cListener;
-    interface OnContactClickListener {
-        void onEditClick(Contact contact);
-        void onDeleteClick(Contact contact);
-    }
 
-    public CursorRecyclerViewAdapter_Contacts(Cursor cCursor, OnContactClickListener listener) {
+    private Cursor cCursor;
+    private Contact myContact;
+
+
+
+    public Meetingfriends_Adapter(Cursor cCursor) {
         Log.d(TAG, "CursorRecyclerViewAdapter_Contacts: constructor called");
         this.cCursor = cCursor;
-        this.cListener = listener;
+
     }
 
     @Override
-    public CursorRecyclerViewAdapter_Contacts.ContactViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public Meetingfriends_Adapter.ContactViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Log.d(TAG, "onCreateViewHolder: on create view holder starts");
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.contact_list_items, parent, false);
         return new ContactViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(CursorRecyclerViewAdapter_Contacts.ContactViewHolder holder, int position) {
+    public void onBindViewHolder(Meetingfriends_Adapter.ContactViewHolder holder, int position) {
 
         Log.d(TAG, "onBindViewHolder: on bind view holder starts...");
         if ((cCursor == null) || cCursor.getCount() == 0) {
@@ -67,45 +64,22 @@ class CursorRecyclerViewAdapter_Contacts extends RecyclerView.Adapter<CursorRecy
                     cCursor.getString(cCursor.getColumnIndex(ContactContract.Columns.CONTACT_LOCATION)),
                     cCursor.getString(cCursor.getColumnIndex(ContactContract.Columns.CONTACT_IMAGEURL)));
 
-            this.aContact = contact;
-
 
             holder.name.setText(contact.getmName());
             holder.email.setText(contact.getmEmail());
             holder.dob.setText(contact.getmBirth());
             holder.location.setText(contact.getmLocation());
             holder.profile_pic.setVisibility(View.VISIBLE);
-            holder.editButton.setVisibility(View.VISIBLE); //TODO ADD ON CLICKLISTENER
-            holder.deleteButton.setVisibility(View.VISIBLE); //TODO ADD ON CLICKLISTENER
+            holder.editButton.setVisibility(View.GONE); //TODO ADD ON CLICKLISTENER
+            holder.deleteButton.setVisibility(View.GONE); //TODO ADD ON CLICKLISTENER
 
-
-            //this is the button listener for recycler view both edit/delete button
-            View.OnClickListener buttonListener = new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    switch (view.getId()) {
-                        case R.id.cli_edit:
-                            if (cListener != null){
-                                cListener.onEditClick(contact);
-                            }
-                            break;
-                        case R.id.cli_delete:
-                            if (cListener !=null) {
-                                cListener.onDeleteClick(contact);
-                            }
-                            break;
-                        default:
-                            Log.d(TAG, "onClick: unexpected button id");
-                    }
-                }
-            };
-
-            holder.editButton.setOnClickListener(buttonListener);
-            holder.deleteButton.setOnClickListener(buttonListener);
+            this.myContact = contact;
 
 
         }
     }
+
+
 
     @Override
     public int getItemCount() {
@@ -117,12 +91,14 @@ class CursorRecyclerViewAdapter_Contacts extends RecyclerView.Adapter<CursorRecy
         }
     }
 
-    public Contact getContact(){
 
-        return aContact;
+   public Contact getTouchedContact () {
+        return myContact;
     }
 
-
+//    public Contact getItem(Cursor cursor) {
+//
+//    }
 
     Cursor swapCursor (Cursor newCursor) {
         if (newCursor == cCursor) {
@@ -143,6 +119,8 @@ class CursorRecyclerViewAdapter_Contacts extends RecyclerView.Adapter<CursorRecy
 
 
     }
+
+
 
 
     static class ContactViewHolder extends RecyclerView.ViewHolder {
@@ -167,6 +145,8 @@ class CursorRecyclerViewAdapter_Contacts extends RecyclerView.Adapter<CursorRecy
         }
     }
 
+
+    // …
 
 
 }
